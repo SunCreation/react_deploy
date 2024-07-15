@@ -9,7 +9,7 @@ function App() {
       <li>
         <input type="checkbox" />
         <span>{props.content}</span>
-        <button className="del" >삭제</button>
+        <button className="del" onClick={() => props.deleteTodo(props.index)} >삭제</button>
       </li>
     )
   }
@@ -22,18 +22,22 @@ function App() {
     inpBox.value = '';
   }
 
+  function deleteTodo(idx) {
+    setTodoList((cur) => cur.filter((_, index) => index !== idx));
+  }
+
   return (
     <div>
       <h1>오늘 할 일은?</h1>
       <div className="form">
-        <form className="ipt" onSubmit={createTodo}>
+        <form action="#" className="ipt" onSubmit={createTodo}>
           <input className="ipt" id="inpBox" type="text" placeholder="할 일을 입력해주세요." />
           <button className="sub" id="subBtn">제출</button>
         </form>
       </div>
       <div>
         <ul>
-          {todoList.map((content, index) => <Todo key={index} content={content} />)}
+          {todoList.map((content, index) => <Todo key={index} index={index} content={content} deleteTodo={deleteTodo} />)}
         </ul>
       </div>
     </div >
